@@ -3,8 +3,7 @@
 // We are linking our routes to a series of "data" sources.
 // These data sources hold arrays of information on table-data, waitinglist, etc.
 // ===============================================================================
-var surveyData = require("../app/data/friends");
-var prePopFriendData = require("../app/data/friends");
+var preFriendsArray = require("../app/data/friends");
 
 
 // ===============================================================================
@@ -19,8 +18,11 @@ module.exports = function(app) {
     app.get("/api/", function(req, res) {
         res.json(surveyData);
     });
-    app.get("/api/pre-friend-data", function(req, res) {
-        res.json(prePopFriendData);
+    app.get("/api/survey", function(req, res) {
+        res.json(surveyData);
+    });
+    app.get("/api/friends", function(req, res) {
+        res.json(preFriendsArray);
     });
     // API POST Requests
     // Below code handles when a user submits a form and thus submits data to the server.
@@ -29,7 +31,7 @@ module.exports = function(app) {
     // (ex. User fills out a reservation request... this data is then sent to the server...
     // Then the server saves the data to the surveyData array)
     // ---------------------------------------------------------------------------
-    app.post("/api/", function(req, res) {
+    app.post("/api/survey", function(req, res) {
         // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
         // It will do this by sending out the value "true" have a table
         // req.body is available since we're using the body-parser middleware
