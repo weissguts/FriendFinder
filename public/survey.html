@@ -179,10 +179,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h1 class="modal-title">Best Match</h1>
             </div>
+            <hr>
             <div class="modal-body">
                 <h2 id="modal-name">Some text in the modal.</h2>
+                <br>
+                <img id="modal-image" src="https://images.pexels.com/photos/324658/pexels-photo-324658.jpeg?auto=compress&cs=tinysrgb&h=350">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -256,18 +259,40 @@
             };
 
 
-            // AJAX post the data to the friends API.
+            // AJAX post the data to the friends AP; also update the data in the Modal.
             $.post("/api/friends", userData, function(data) {
-                if(data) {
-                    console.log(data);
-                    for (var i = 0; i < data.length -1; i++) {
-                        console.log(data[i].name);
-                        console.log("Tetetetet");
-                        console.log($(".modal-body #modal-name").attr("value", "Test Ajax"));
-                        $(".modal-body").find("#modal-name").text("Dan Dan Dan");
-                    }
-                }
-                
+
+                // function getSum(total, num) {
+                //     return total + num;
+                // }
+
+                var userResult = userData.scores;
+                console.log(userResult.length);
+                console.log(userResult);
+                console.log(userResult.reduce((a, n) => (a + Number(n)), 0));
+
+                // for (var i =0; i < userResult.length; i++) {
+                //     // console.log(parseInt(userResult));
+                //     i++;
+                // }
+
+
+
+                // var newFriend;
+                // var differenceArray = [];
+                // if(data) {
+                //     console.log(data);
+                //     for (var i = 0; i < data.length -1; i++) {
+                //
+                //         for (var j = 0; j < data.length -1; j++) {
+                //
+                //         }
+                //
+                //         $(".modal-body").find("#modal-name").text(data[i].name);
+                //         $(".modal-body").find("#modal-image").attr("src",data[i].photo);
+                //     }
+                // }
+
             });
         } else {
             alert("Please fill out all fields before submitting!");
