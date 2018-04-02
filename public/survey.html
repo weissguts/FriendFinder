@@ -6,9 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
 
 
     <title>Survey</title>
@@ -263,26 +271,40 @@
             $.post("/api/friends", userData, function(data) {
 
                 var newFriendValue;
-                var differenceArray = [];
+                var bestFriendArray = [];
                 var userResult = userData.scores.reduce((a, n) => (a + Number(n)), 0);
+                var difference;
+
+                var currentBffValue = 50; //max value of all 5's in 10 questions.
+
 
 
                 if(data) {
+                    var bffArray = [];
                     console.log(data);
+
+                    //For loop to push values of everyone in friendsList (except new user) into a new Array. *bestFriendArray
                     for (var i = 0; i < data.length -1; i++) {
                         newFriendValue = data[i].scores.reduce((a, n) => (a + Number(n)), 0);
-                        differenceArray.push({name: data[i].name, photo: data[i].photo, newValue: newFriendValue});
-                        console.log(differenceArray);
-
-                        // $(".modal-body").find("#modal-name").text(data[i].name);
-                        // $(".modal-body").find("#modal-image").attr("src",data[i].photo);
+                        bestFriendArray.push({name: data[i].name, photo: data[i].photo, newValue: newFriendValue});
+                        console.log(bestFriendArray);
                     }
 
-                    for (var i = 0; i < differenceArray.length; i++) {
-                        j = differenceArray[i].newValue;
-                        console.log(j + " Now Working");
+                    for (var i = 0; i < bestFriendArray.length; i++) {
+                        var j = Math.abs(userResult - bestFriendArray[i].newValue);
+                        var k = currentBffValue;
+                        if (j <= k) {
+                            k = j;
+                            bffArray = [];
+                            bffArray.push({name: bestFriendArray[i].name, photo: bestFriendArray[i].photo});
+                            $(".modal-body").find("#modal-name").text(bestFriendArray[i].name);
+                            $(".modal-body").find("#modal-image").attr("src", bestFriendArray[i].photo);
+                            i++;
+                        } else {
+                            bffArray = [];
+                            bffArray.push({name: bestFriendArray[0].name, photo: bestFriendArray[0].photo});
+                        }
                     }
-
                 }
 
             });
