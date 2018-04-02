@@ -262,36 +262,21 @@
             // AJAX post the data to the friends AP; also update the data in the Modal.
             $.post("/api/friends", userData, function(data) {
 
-                // function getSum(total, num) {
-                //     return total + num;
-                // }
+                var newFriendValue;
+                var differenceArray = [];
+                var userResult = userData.scores.reduce((a, n) => (a + Number(n)), 0);
 
-                var userResult = userData.scores;
-                console.log(userResult.length);
-                console.log(userResult);
-                console.log(userResult.reduce((a, n) => (a + Number(n)), 0));
-
-                // for (var i =0; i < userResult.length; i++) {
-                //     // console.log(parseInt(userResult));
-                //     i++;
-                // }
+                if(data) {
+                    console.log(data);
+                    for (var i = 0; i < data.length -1; i++) {
+                        newFriendValue = data[i].scores.reduce((a, n) => (a + Number(n)), 0);
+                        differenceArray.push(newFriendValue);
 
 
-
-                // var newFriend;
-                // var differenceArray = [];
-                // if(data) {
-                //     console.log(data);
-                //     for (var i = 0; i < data.length -1; i++) {
-                //
-                //         for (var j = 0; j < data.length -1; j++) {
-                //
-                //         }
-                //
-                //         $(".modal-body").find("#modal-name").text(data[i].name);
-                //         $(".modal-body").find("#modal-image").attr("src",data[i].photo);
-                //     }
-                // }
+                        // $(".modal-body").find("#modal-name").text(data[i].name);
+                        // $(".modal-body").find("#modal-image").attr("src",data[i].photo);
+                    }
+                }
 
             });
         } else {
