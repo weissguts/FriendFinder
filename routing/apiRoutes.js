@@ -16,13 +16,14 @@ module.exports = function(app) {
     // (ex: localhost:PORT/api/admin... they are shown a JSON of the data in the table)
     // ---------------------------------------------------------------------------
     app.get("/api/", function(req, res) {
-        res.json(surveyData);
+        res.json(preFriendsArray);
     });
     app.get("/api/survey", function(req, res) {
-        res.json(surveyData);
+        res.json(preFriendsArray);
     });
     app.get("/api/friends", function(req, res) {
         res.json(preFriendsArray);
+
     });
     // API POST Requests
     // Below code handles when a user submits a form and thus submits data to the server.
@@ -36,14 +37,8 @@ module.exports = function(app) {
         // It will do this by sending out the value "true" have a table
         // req.body is available since we're using the body-parser middleware
 
-        // if (surveyData.length < 5) {
-        //     surveyData.push(req.body);
-        //     res.json(true);
-        // }
-        // else {
-        //     prePopFriendData.push(req.body);
-        //     res.json(false);
-        // }
+        res.push(req);
+        console.log(preFriendsArray);
 
     });
     // ---------------------------------------------------------------------------
@@ -53,5 +48,15 @@ module.exports = function(app) {
         surveyData = [];
         prePopFriendData = [];
         console.log(surveyData);
+    });
+
+    app.post("/", function(req, res) {
+        console.log("Working + normal ")
+    });
+
+    app.post("/api/friends", function(req, res) {
+        preFriendsArray.push(req.body);
+        res.json(preFriendsArray);
+
     });
 };
