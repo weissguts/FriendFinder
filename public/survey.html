@@ -266,16 +266,23 @@
                 var differenceArray = [];
                 var userResult = userData.scores.reduce((a, n) => (a + Number(n)), 0);
 
+
                 if(data) {
                     console.log(data);
                     for (var i = 0; i < data.length -1; i++) {
                         newFriendValue = data[i].scores.reduce((a, n) => (a + Number(n)), 0);
-                        differenceArray.push(newFriendValue);
-
+                        differenceArray.push({name: data[i].name, photo: data[i].photo, newValue: newFriendValue});
+                        console.log(differenceArray);
 
                         // $(".modal-body").find("#modal-name").text(data[i].name);
                         // $(".modal-body").find("#modal-image").attr("src",data[i].photo);
                     }
+
+                    for (var i = 0; i < differenceArray.length; i++) {
+                        j = differenceArray[i].newValue;
+                        console.log(j + " Now Working");
+                    }
+
                 }
 
             });
