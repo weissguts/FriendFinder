@@ -275,7 +275,7 @@
                 var userResult = userData.scores.reduce((a, n) => (a + Number(n)), 0);
                 var difference;
 
-                var currentBffValue = 50; //max value of all 5's in 10 questions.
+                var maxBffvalue = 50; //max value of all 5's in 10 questions.
 
 
 
@@ -286,23 +286,22 @@
                     //For loop to push values of everyone in friendsList (except new user) into a new Array. *bestFriendArray
                     for (var i = 0; i < data.length -1; i++) {
                         newFriendValue = data[i].scores.reduce((a, n) => (a + Number(n)), 0);
+                        console.log(newFriendValue + "asadasdf");
                         bestFriendArray.push({name: data[i].name, photo: data[i].photo, newValue: newFriendValue});
+                        console.log(newFriendValue + " " + i);
                         console.log(bestFriendArray);
                     }
 
+                    var currentBffValue = maxBffvalue;
                     for (var i = 0; i < bestFriendArray.length; i++) {
                         var j = Math.abs(userResult - bestFriendArray[i].newValue);
-                        var k = currentBffValue;
-                        if (j <= k) {
-                            k = j;
+                        console.log(j + bestFriendArray[i].name + "zzzzzz");
+                        if (j <= currentBffValue) {
+                            currentBffValue = j;
                             bffArray = [];
                             bffArray.push({name: bestFriendArray[i].name, photo: bestFriendArray[i].photo});
                             $(".modal-body").find("#modal-name").text(bestFriendArray[i].name);
                             $(".modal-body").find("#modal-image").attr("src", bestFriendArray[i].photo);
-                            i++;
-                        } else {
-                            bffArray = [];
-                            bffArray.push({name: bestFriendArray[0].name, photo: bestFriendArray[0].photo});
                         }
                     }
                 }
